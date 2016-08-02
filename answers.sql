@@ -218,3 +218,50 @@ So, the result set should be:
 
 
 SELECT models.name, models.brand_name, brands.founded FROM models LEFT JOIN brands ON models.brand_name=brands.name WHERE models.year=1960;
+
+
+==========
+11
+
+-----
+
+Modify the query so it only selects models whose brands ARE in the brands table.
+So, we shouldn't see models who brands aren't in the brands table (a.k.a. Fillmore,
+Outback) nor should we see information about brands who don't have any models in 
+the models table (a.k.a. Tesla).
+
+-----
+
+
+SELECT m.name,
+         m.brand_name,
+         b.founded
+  FROM models AS m
+ JOIN brands AS b
+ ON b.name = m.brand_name;
+
+
+==========
+12
+
+-----
+
+Modify the query so that it only selects brands that do NOT have any
+models in the models table.
+
+The correct result set is:
+
+ name  | founded
+-------+---------
+ Tesla |    2003
+(1 rows)
+
+-----
+
+
+SELECT b.name,
+         founded
+  FROM brands AS b
+    LEFT JOIN models AS m
+      ON b.name = m.brand_name
+  WHERE m.name IS NULL;
